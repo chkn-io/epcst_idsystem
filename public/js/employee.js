@@ -1,8 +1,9 @@
 $('table').DataTable({});
-var myModal = new bootstrap.Modal(document.getElementById('new-employee '), {
-    keyboard: false
-  })
 
-$(document).on('click','.new-employee',function(){
-    myModal.show()
-})
+function loadFile(event) {
+    var output = document.getElementById('pic-preview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+        URL.revokeObjectURL(output.src) // free memory
+    }
+};

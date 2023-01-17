@@ -17,29 +17,48 @@
             <div class="card">
                 <div class="card-header">{{ __('New Employee')}}</div>
                 <div class="card-body">
+                    <h5>Enter new employee details below </h5>
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-floating mb-3 mt-3">
-                            <input type="text" class="form-control" id="email" placeholder="Enter email" name="email">
-                            <label for="email">Email</label>
-                        </div>
-                            <div class="mb-3 mt-3 col-md-4">
-                                <label for="first_name" class="form-label">First Name</label>
-                                <input type="text" required class="form-control" id="first_name" placeholder="Enter First Name" name="first_name">
-                            </div>
-                            <div class="mb-3 mt-3 col-md-4">
-                                <label for="middle_name" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="middle_name" placeholder="Enter Middle Name" name="middle_name">
-                            </div>
+                            <div class="row">
+                                <div class="col-md-6" >
+                                    <div class="mb-3 mt-3 col-md-12">
+                                        <label for="employee_number" class="form-label">Employee Number</label>
+                                        <input type="text" required class="form-control" id="employee_number" placeholder="Enter Employee #" name="employee_number">
+                                    </div>
+                                    <div class="mb-3 mt-3 col-md-12">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input type="text" required class="form-control" id="first_name" placeholder="Enter First Name" name="first_name">
+                                    </div>
+                                    <div class="mb-3 mt-3 col-md-12">
+                                        <label for="middle_name" class="form-label">Middle Name</label>
+                                        <input type="text" class="form-control" id="middle_name" placeholder="Enter Middle Name" name="middle_name">
+                                    </div>
 
-                            <div class="mb-3 mt-3 col-md-4">
-                                <label for="last_name" class="form-label">Last Name</label>
-                                <input type="text" required class="form-control" id="last_name" placeholder="Enter Last Name" name="last_name">
+                                    <div class="mb-3 mt-3 col-md-12">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input type="text" required class="form-control" id="last_name" placeholder="Enter Last Name" name="last_name">
+                                    </div>
+                                    <div class="mb-3 mt-3 col-md-12">
+                                        <label for="rfid" class="form-label">RFID Number</label>
+                                        <input type="text" required class="form-control" id="rfid" placeholder="Scan RFID" name="rfid">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row justify-content-around">
+                                        <div class="mb-3 mt-3 col-md-6">
+                                            <figcaption>
+                                                <img width="100%" src="{{ asset('img/default.png') }}" id="pic-preview" alt="">
+                                            </figcaption>
+                                            <input type="file" onchange="loadFile(event)" required class="form-control" id="picture" name="picture" accept="image/*" required>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success">Add Record</button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
-                           
-                            
-                        </div>
-                       
                     </form>
                 </div>
             </div>
@@ -113,8 +132,16 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
       </div>
-
     </div>
   </div>
 </div>
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('pic-preview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
 @endsection
