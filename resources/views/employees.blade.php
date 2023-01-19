@@ -70,7 +70,7 @@
                                             <figcaption>
                                                 <img width="100%" src="{{ asset('img/default.png') }}" id="pic-preview" alt="">
                                             </figcaption>
-                                            <input value="{{ old('picture') }}" type="file" onchange="loadFile(event)" required class="form-control @error('picture') is-invalid @enderror" id="picture" name="picture" accept="image/*" required>
+                                            <input type="file" onchange="loadFile(event)" required class="form-control @error('picture') is-invalid @enderror" id="picture" name="picture" accept="image/*" required>
                                         </div>
                                         <div class="col-md-12 text-center">
                                             <button class="btn btn-success">Add Record</button>

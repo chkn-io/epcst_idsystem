@@ -28,17 +28,28 @@ Auth::routes([
 ]);
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
+Route::group(['middleware' => 'auth'], function() {
+    
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet']);
+    Route::post('/changePassword',[HomeController::class, 'changePasswordPost']);
 
-Route::prefix('employees')->group(function(){
-    Route::post('/', [TeachersController::class,'store'])->middleware('auth');
-    Route::get('/', [TeachersController::class,'index'])->middleware('auth');
-    Route::get('/{status}/{id}', [TeachersController::class,'status'])->middleware('auth');
-    Route::get('/{id}', [TeachersController::class,'edit'])->middleware('auth');
+    Route::prefix('employees')->group(function(){
+        Route::post('/', [TeachersController::class,'store']);
+        Route::get('/', [TeachersController::class,'index']);
+        Route::get('/{status}/{id}', [TeachersController::class,'status']);
+        Route::get('/{id}', [TeachersController::class,'edit']);
+        Route::post('/update/{id}', [TeachersController::class,'update']);
+    });
+
+    Route::get('/users', [UserController::class,'index']);
+    Route::get('/reports', [ReportsController::class,'index']);
+
 });
 
 
-Route::get('/users', [UserController::class,'index'])->middleware('auth');
-Route::get('/reports', [ReportsController::class,'index'])->middleware('auth');
+
+
+
 

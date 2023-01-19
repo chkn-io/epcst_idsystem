@@ -54,7 +54,6 @@ class TeachersController extends Controller
         $request->old('middle_name');
         $request->old('last_name');
         $request->old('rfid');
-        $request->old('picture');
         
         return redirect('/employees');
     }
@@ -101,7 +100,36 @@ class TeachersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $stmt = Teachers::where('id',$id)->exists();
+
+        
+
+        if($stmt){
+            $stmt = Teachers::where('id',$id)->get();
+            $en = $stmt[0]->employee_number != $request->employee_number ? '|unique:teachers':'|';
+            $validated = $request->validate([
+                'employee_number' => 'required'.$en.'|max:6',
+                'first_name'=>'required',
+                'middle_name'=>'nullable',
+                'last_name'=>'required',
+                'rfid' => 'nullable',
+                'picture'=>'nullable|mimes:png,jpg,jpeg'
+            ]);
+
+            if(isset($request->picture)){
+                $filename = $stmt[0]->picture;
+                $path = $request->file('picture')->storeAs(
+                    'images', str_replace('images/','',$filename)         
+                );
+                $validated['picture'] = $filename;
+            }
+           
+            Teachers::where('id', $id)
+                ->update($validated);
+            
+            return redirect('/employees');
+        }
     }
 
     /**

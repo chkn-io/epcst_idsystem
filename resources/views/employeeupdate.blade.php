@@ -19,7 +19,7 @@
                 <div class="card-header">{{ __('New Employee')}}</div>
                 <div class="card-body">
                     <h5>Enter new employee details below </h5>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form action="/employees/update/{{$employee[0]->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
                             <div class="row">
                                 <div class="col-md-6" >
@@ -69,12 +69,12 @@
                                     <div class="row justify-content-around">
                                         <div class="mb-3 mt-3 col-md-6">
                                             <figcaption>
-                                                <img width="100%" src="{{ asset('img/default.png') }}" id="pic-preview" alt="">
+                                                <img width="100%" src="{{ asset(''.$employee[0]->picture.'') }}" id="pic-preview" alt="">
                                             </figcaption>
-                                            <input value="{{ old('picture') }}" type="file" onchange="loadFile(event)" required class="form-control @error('picture') is-invalid @enderror" id="picture" name="picture" accept="image/*" required>
+                                            <input value="{{ old('picture') }}" type="file" onchange="loadFile(event)" class="form-control @error('picture') is-invalid @enderror" id="picture" name="picture" accept="image/*" >
                                         </div>
                                         <div class="col-md-12 text-center">
-                                            <button class="btn btn-success">Add Record</button>
+                                            <button class="btn btn-success">Update Record</button>
                                         </div>
                                     </div>
                                     
