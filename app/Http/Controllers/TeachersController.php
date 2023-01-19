@@ -22,16 +22,6 @@ class TeachersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,19 +30,46 @@ class TeachersController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'employee_number' => 'required|unique:teachers|max:6',
+            'first_name'=>'required',
+            'middle_name'=>'nullable',
+            'last_name'=>'required',
+            'rfid' => 'nullable',
+            'picture'=>'required|mimes:png,jpg,jpeg'
+        ]);
+
+        $extension = pathinfo($request->file('picture')->getClientOriginalName(), PATHINFO_EXTENSION);
+        $filename = time().'.'.$extension;
+        
+        $path = $request->file('picture')->storeAs(
+            'images', $filename         
+        );
+        
+        $validated['picture'] = $path;
+        $employee = Teachers::create($validated);
+
+        $request->old('employee_number');
+        $request->old('first_name');
+        $request->old('middle_name');
+        $request->old('last_name');
+        $request->old('rfid');
+        $request->old('picture');
+        
+        return redirect('/employees');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function status($status,$id){
+        $stmt = Teachers::where('id',$id)->exists();
+        if($stmt){
+            $employee = Teachers::find($id);
+            $employee->status = $status;
+            $employee->save();   
+            return redirect('/employees');      
+        }else{
+            return abort(404);
+        }
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -61,7 +78,18 @@ class TeachersController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $stmt = Teachers::where('id',$id)->get();
+
+        if(!$stmt->isEmpty()){
+            return view('employeeupdate', [
+                "active"=>'employees',
+                "employee"=>$stmt
+            ]);
+        }else{
+            return abort(404);
+        }
+        
     }
 
     /**

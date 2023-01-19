@@ -2,11 +2,12 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Employees</h1>
+    <h1>Update Employee Details</h1>
     <nav>
         <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('/home')}}">Home</a></li>
-        <li class="breadcrumb-item active">Employees</li>
+        <li class="breadcrumb-item"><a href="{{url('/employees')}}">Employees</a></li>
+        <li class="breadcrumb-item active">Update</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
@@ -28,7 +29,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
-                                        <input type="text" value="{{ old('employee_number') }}" required class="form-control @error('employee_number') is-invalid @enderror" id="employee_number" placeholder="Enter Employee #" name="employee_number">
+                                        <input type="text" value="{{ $employee[0]->employee_number }}" required class="form-control @error('employee_number') is-invalid @enderror" id="employee_number" placeholder="Enter Employee #" name="employee_number">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
                                         <label for="first_name" class="form-label">First Name <span class="text-danger">*</span>
@@ -36,7 +37,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
-                                        <input type="text" value="{{ old('first_name') }}" required class="form-control @error('first_name') is-invalid @enderror" id="first_name" placeholder="Enter First Name" name="first_name">
+                                        <input type="text" value="{{ $employee[0]->first_name }}" required class="form-control @error('first_name') is-invalid @enderror" id="first_name" placeholder="Enter First Name" name="first_name">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
                                         <label for="middle_name" class="form-label">Middle Name
@@ -44,7 +45,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
-                                        <input type="text" value="{{ old('middle_name') }}" class="form-control @error('middle_name') is-invalid @enderror" id="middle_name" placeholder="Enter Middle Name" name="middle_name">
+                                        <input type="text" value="{{ $employee[0]->middle_name }}" class="form-control @error('middle_name') is-invalid @enderror" id="middle_name" placeholder="Enter Middle Name" name="middle_name">
                                     </div>
 
                                     <div class="mb-3 mt-3 col-md-12">
@@ -53,7 +54,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
-                                        <input type="text" value="{{ old('last_name') }}" required class="form-control @error('last_name') is-invalid @enderror" id="last_name" placeholder="Enter Last Name" name="last_name">
+                                        <input type="text" value="{{ $employee[0]->last_name }}" required class="form-control @error('last_name') is-invalid @enderror" id="last_name" placeholder="Enter Last Name" name="last_name">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
                                         <label for="rfid" class="form-label">RFID Number
@@ -61,7 +62,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </label>
-                                        <input value="{{ old('rfid') }}" type="text" class="form-control @error('rfid') is-invalid @enderror" id="rfid" placeholder="Scan RFID" name="rfid">
+                                        <input value="{{ $employee[0]->rfid }}" type="text" class="form-control @error('rfid') is-invalid @enderror" id="rfid" placeholder="Scan RFID" name="rfid">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -83,78 +84,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">{{ __('Employee List') }}
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-striped table-responsive">
-                        <thead>
-                            <tr>
-                                <th>Employee Number</th>
-                                <th>Name</th>
-                                <th>Picture</th>
-                                <th>RFID</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($employees as $employee)
-                                <tr>
-                                    <td>{{$employee->employee_number}}</td>
-                                    <td>{{$employee->last_name}},
-                                        {{$employee->first_name}} 
-                                        {{$employee->middle_name}}
-                                    </td>
-                                    <td>
-                                        @if($employee->picture != "" )
-                                            <img width="100px" class="img-thumbnail" src="{{asset('' . $employee->picture . '')}}" alt="Default Picture">
-                                        @else
-                                            <img src="{{asset('img/default.png')}}" alt="Default Picture">
-                                        @endif
-                                    </td>
-                                    <td>{{$employee->rfid == '' ? 'Not Available':$employee->rfid}}</td>
-                                    <td><span class="badge {{ $employee->status == 'active' ? 'bg-success':'bg-danger' }}">{{$employee->status}}</span></td>
-                                    <td>
-                                        <a href="{{url('employees/'.$employee->id.'')}}" class="btn btn-primary btn-sm">Update</a>
-                                    <a href="{{url('employees/')}}" data-record="{{$employee->id}}" class="btn btn-sm {{ $employee->status == 'active' ? 'btn-warning deactivate':'btn-success activate' }}">
-                                            {{ $employee->status == 'active' ? 'De-activate':'Activate' }}
-                                        </a> 
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 
-
-<div class="modal" id="new-employee">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">New Employee</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 <script>
   var loadFile = function(event) {
     var output = document.getElementById('pic-preview');

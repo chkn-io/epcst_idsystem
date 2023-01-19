@@ -29,7 +29,16 @@ Auth::routes([
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::get('/employees', [TeachersController::class,'index'])->middleware('auth');
+
+
+Route::prefix('employees')->group(function(){
+    Route::post('/', [TeachersController::class,'store'])->middleware('auth');
+    Route::get('/', [TeachersController::class,'index'])->middleware('auth');
+    Route::get('/{status}/{id}', [TeachersController::class,'status'])->middleware('auth');
+    Route::get('/{id}', [TeachersController::class,'edit'])->middleware('auth');
+});
+
+
 Route::get('/users', [UserController::class,'index'])->middleware('auth');
 Route::get('/reports', [ReportsController::class,'index'])->middleware('auth');
 
