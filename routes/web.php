@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\RfidController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{status}/{id}', [TeachersController::class,'status']);
         Route::get('/{id}', [TeachersController::class,'edit']);
         Route::post('/update/{id}', [TeachersController::class,'update']);
+    });
+
+    Route::prefix('rfid')->group(function(){
+        Route::get('/',[RfidController::class,'index']);
     });
 
     Route::get('/users', [UserController::class,'index']);

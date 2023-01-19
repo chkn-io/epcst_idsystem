@@ -108,6 +108,12 @@
                 </a>
             </li><!-- End Dashboard Nav -->
             <li class="nav-item">
+                <a class="nav-link   {{ $active == 'rfid' ? '': 'collapsed' }}" href="{{ url('/rfid') }}">
+                <i class="fa-solid fa-id-badge"></i>
+                <span>RFID Scanner</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+            <li class="nav-item">
                 <a class="nav-link   {{ $active == 'reports' ? '': 'collapsed' }}"  href="{{ url('/reports') }}">
                 <i class="fas fa-file-alt"></i>
                 <span>Reports</span>
@@ -118,8 +124,6 @@
         </aside><!-- End Sidebar-->
 
         <main id="main" class="main">
-
-               
             @yield('content')
         </main>
     </div>

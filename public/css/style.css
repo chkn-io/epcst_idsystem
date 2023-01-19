@@ -1258,3 +1258,19 @@ h6 {
   font-size: 13px;
   color: #057001;
 }
+
+#on-duty{
+  width:80%;
+}
+
+#time{
+  font-size:80pt;
+  text-align: center;
+  margin:0;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#date{
+  font-size:15pt;
+  text-align: center;
+}
