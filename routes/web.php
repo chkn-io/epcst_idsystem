@@ -43,12 +43,18 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{id}', [TeachersController::class,'edit']);
         Route::post('/update/{id}', [TeachersController::class,'update']);
     });
+    
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class,'index'])->middleware('auth');
+        Route::post('add_data', [UserController::class,'store'])->name('add_data');
+        Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
+        Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
+    });
 
     Route::prefix('rfid')->group(function(){
         Route::get('/',[RfidController::class,'index']);
     });
 
-    Route::get('/users', [UserController::class,'index']);
     Route::get('/reports', [ReportsController::class,'index']);
 
 });

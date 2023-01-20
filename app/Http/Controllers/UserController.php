@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserFormRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users', ["active"=>'users']);
+
+        $users = User::all();
+        return view('users', ["active"=>'users'],["users"=> $users] );
     }
 
     /**
@@ -32,9 +37,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserFormRequest $request)
     {
-        //
+        $users = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        return redirect('users');
     }
 
     /**
@@ -56,7 +66,18 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $users = User::where('id',$id)->get();
+
+        if(!$users->isEmpty()){
+            return view('users_update', [
+                "active"=>'users',
+                "user"=>$users
+            ]);
+        }else{
+            return abort(404);
+        }
+        
     }
 
     /**
@@ -68,9 +89,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+            $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|',
+            // 'password' => 'required|min:8',
+            ]);
 
+            $users = User::find($id);
+            $users->name = $request->name;
+            $users->email = $request->email;
+            // $users->password = Hash::make($request->password);
+            $users->update();
+            return redirect('users');
+    }
     /**
      * Remove the specified resource from storage.
      *
