@@ -35,7 +35,7 @@ class TeachersController extends Controller
             'first_name'=>'required',
             'middle_name'=>'nullable',
             'last_name'=>'required',
-            'rfid' => 'nullable',
+            'rfid' => 'nullable|unique:teachers',
             'picture'=>'required|mimes:png,jpg,jpeg'
         ]);
 
@@ -103,17 +103,16 @@ class TeachersController extends Controller
         
         $stmt = Teachers::where('id',$id)->exists();
 
-        
-
         if($stmt){
             $stmt = Teachers::where('id',$id)->get();
             $en = $stmt[0]->employee_number != $request->employee_number ? '|unique:teachers':'|';
+            $rfid = $stmt[0]->rfid != $request->rfid ? '|unique:teachers':'|';
             $validated = $request->validate([
                 'employee_number' => 'required'.$en.'|max:6',
                 'first_name'=>'required',
                 'middle_name'=>'nullable',
                 'last_name'=>'required',
-                'rfid' => 'nullable',
+                'rfid' => 'nullable'.$rfid,
                 'picture'=>'nullable|mimes:png,jpg,jpeg'
             ]);
 

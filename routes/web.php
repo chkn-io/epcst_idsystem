@@ -36,29 +36,33 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet']);
     Route::post('/changePassword',[HomeController::class, 'changePasswordPost']);
 
-    Route::prefix('employees')->group(function(){
-        Route::post('/', [TeachersController::class,'store']);
-        Route::get('/', [TeachersController::class,'index']);
-        Route::get('/{status}/{id}', [TeachersController::class,'status']);
-        Route::get('/{id}', [TeachersController::class,'edit']);
-        Route::post('/update/{id}', [TeachersController::class,'update']);
+    Route::group(['middleware' => 'is_admin'], function(){
+        Route::prefix('employees')->group(function(){
+            Route::post('/', [TeachersController::class,'store']);
+            Route::get('/', [TeachersController::class,'index']);
+            Route::get('/{status}/{id}', [TeachersController::class,'status']);
+            Route::get('/{id}', [TeachersController::class,'edit']);
+            Route::post('/update/{id}', [TeachersController::class,'update']);
+        });
+    
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class,'index']);
+            Route::post('add_data', [UserController::class,'store'])->name('add_data');
+            Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
+            Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
+        });
+
+        
+        Route::get('/reports', [ReportsController::class,'index']);
     });
     
-    Route::prefix('users')->group(function () {
-        Route::get('/', [UserController::class,'index'])->middleware('auth');
-        Route::post('add_data', [UserController::class,'store'])->name('add_data');
-        Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
-        Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
-    });
-
-
+    
 
     Route::prefix('rfid')->group(function(){
         Route::get('/',[RfidController::class,'index']);
         Route::post('/',[RfidController::class,'store']);
     });
 
-    Route::get('/reports', [ReportsController::class,'index']);
 
 });
 

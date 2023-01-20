@@ -88,35 +88,40 @@
         <aside id="sidebar" class="sidebar">
 
             <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link  {{ $active == 'home' ? '': 'collapsed' }}" href="{{ url('/home') }}">
                 <i class="fas fa-th"></i>
                 <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-            <li class="nav-item">
-                <a class="nav-link   {{ $active == 'employees' ? '': 'collapsed' }}" href="{{ url('/employees') }}">
-                <i class="fas fa-users"></i>
-                <span>Employees</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-            <li class="nav-item">
-                <a class="nav-link   {{ $active == 'users' ? '': 'collapsed' }}" href="{{ url('/users') }}">
-                <i class="fas fa-users-cog"></i>
-                <span>Users</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
+
+            @if(auth()->user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'employees' ? '': 'collapsed' }}" href="{{ url('/employees') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Employees</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+                <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'users' ? '': 'collapsed' }}" href="{{ url('/users') }}">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Users</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+                
+                <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'reports' ? '': 'collapsed' }}"  href="{{ url('/reports') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+            @endif
+            
+
             <li class="nav-item">
                 <a class="nav-link   {{ $active == 'rfid' ? '': 'collapsed' }}" href="{{ url('/rfid') }}">
                 <i class="fa-solid fa-id-badge"></i>
                 <span>RFID Scanner</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-            <li class="nav-item">
-                <a class="nav-link   {{ $active == 'reports' ? '': 'collapsed' }}"  href="{{ url('/reports') }}">
-                <i class="fas fa-file-alt"></i>
-                <span>Reports</span>
                 </a>
             </li><!-- End Dashboard Nav -->
             </ul>
