@@ -1274,3 +1274,64 @@ h6 {
   font-size:15pt;
   text-align: center;
 }
+
+.banner{
+  background-color:#d3d9d3 !important;
+}
+
+.tran-details{
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.tran-details p{
+  border-bottom:1px solid #ccc !important;
+}
+
+.tran-details p:nth-child(1){
+  font-size:50pt;
+}
+.tran-details p:nth-child(2){
+  font-size:40pt;
+}
+
+.tran-details p:nth-child(3){
+  font-size:60pt;
+}
+.tran-details p:nth-child(4){
+  font-size:60pt;
+}
+
+
+.camera{
+  position:absolute;
+  cursor:move;
+}
+
+#start-camera, #click-photo, #canvas, #scan-form{
+  display:none;
+}
+
+#rfid-input{
+  opacity:0;
+  left:-9999px;
+  position:absolute
+}
+
+#details-view{
+  display:none;
+  float:left;
+}
+
+
+#default-view{
+  float:left;
+}
+
+#norecord-view{
+  display:none;
+  float:left;
+}
+
+#loading{
+  display:none;
+  float:left;
+}

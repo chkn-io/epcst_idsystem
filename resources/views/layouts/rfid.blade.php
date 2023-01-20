@@ -21,32 +21,35 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="bg-success">
+    <form id="scan-form">
+        @csrf
+        <input type="text" name="snapshot" id="snapshot">
+        <input type="text" name="rfid_code" id="scanned-code">
+    </form>
+    <input type="text" id="rfid-input" >
+
+    <div class="camera" id="camera-handle">
+        <button id="start-camera">Start Camera</button>
+        <video id="video" width="220" height="140" autoplay></video>
+        <button id="click-photo">Click Photo</button>
+        <canvas id="canvas" width="320" height="240"></canvas>
+    </div>
 <main>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="bg-white">
                     <div class="row justify-content-between">
-                        <div class="col-md-8 bg-white p-3 pt-4">
-                            <img width="100px" src="{{asset('img/logo.png')}}" class="float-start me-3" alt="">
-                            <h2 class="float-start">
-                                EASTWOODS Professional College <br>
-                                <span class="text-muted" style="font-size:15pt;">of Science and Technology</span>
-                            </h2>
-                            <br>
-                            <hr style="width:80%;float:left;">
-                            <br>
-                            <p id="on-duty" class="float-start">Guard on Duty: Juan Dela Cruz</p>
-                        </div>
-                        <div class="col-md-4 bg-dark text-white p-3">
-                            <p id="time">4:30 PM</p>
-                            <p id="date" class="text-warning">January 19, 2023 | Thursday</p>
-                        </div>
+                        @yield('content')
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+
+<script type="module" src="{{asset('js/jquery.min.js')}}"></script>
+<script type="module" src="{{asset('js/rfid.js')}}"></script>
 </body>
 </html>

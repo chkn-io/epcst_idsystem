@@ -44,8 +44,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/update/{id}', [TeachersController::class,'update']);
     });
 
+
+
     Route::prefix('rfid')->group(function(){
         Route::get('/',[RfidController::class,'index']);
+        Route::post('/',[RfidController::class,'store']);
     });
 
     Route::get('/users', [UserController::class,'index']);
