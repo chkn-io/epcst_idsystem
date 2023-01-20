@@ -1335,3 +1335,23 @@ h6 {
   display:none;
   float:left;
 }
+
+.employee-status li .float-end{
+  width:15px;
+  height:15px;
+  border-radius: 100%;
+  margin-top:5px;
+}
+
+.in{
+  background-color:green;
+}
+
+.out{
+  background-color:red;
+}
+
+.status-body{
+  height:75vh;
+  overflow-y:scroll;
+}

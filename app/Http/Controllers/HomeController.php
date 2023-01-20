@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ["active"=>'home']);
+         $stmt = DB::select('
+         SELECT 
+         CONCAT(t.last_name,", ",t.first_name) as name,
+         IFNULL((SELECT type FROM logs as l WHERE t.id = l.teachers_id and created_at LIKE "%'.date('Y-m-d').'%" ORDER BY l.id DESC LIMIT 1 ),"out") as status
+         FROM teachers as t
+         
+         ORDER BY status ASC;
+        ');
+
+        return view('home', [
+            "active"=>'home',
+            'status'=>$stmt
+        ]);
     }
 
     public function showChangePasswordGet() {
