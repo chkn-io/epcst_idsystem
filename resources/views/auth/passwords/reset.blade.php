@@ -1,16 +1,18 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('layouts.resetlayout')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="d-flex justify-content-center py-4">
+            <a href="index.html" style="text-decoration:none" class="logo d-flex align-items-center w-auto">
+              <img src="{{asset('img/logo.png')}}" alt="">
+              <span class="d-none d-lg-block">{{ config('app.name', 'Laravel') }}</span>
+            </a>
+          </div><!-- End Logo -->
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
-
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="row mb-3">
@@ -26,7 +28,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -62,4 +63,3 @@
         </div>
     </div>
 </div>
-@endsection
