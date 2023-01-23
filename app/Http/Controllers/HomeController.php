@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use App\Models\Logs;
 
 class HomeController extends Controller
 {
@@ -25,19 +27,32 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {   
+
+        $date = Session::has('dashboard_date') ? session('dashboard_date') : date('Y-m-d');
+
+        echo $date;
+       
          $stmt = DB::select('
          SELECT 
          CONCAT(t.last_name,", ",t.first_name) as name,
-         IFNULL((SELECT type FROM logs as l WHERE t.id = l.teachers_id and created_at LIKE "%'.date('Y-m-d').'%" ORDER BY l.id DESC LIMIT 1 ),"out") as status
+         IFNULL((SELECT type FROM logs as l WHERE t.id = l.teachers_id and created_at LIKE "%'.$date.'%" ORDER BY l.id DESC LIMIT 1 ),"out") as status
          FROM teachers as t
          
          ORDER BY status ASC;
         ');
 
+        $logs = Logs::select('logs.created_at','logs.type','logs.snapshot','teachers.last_name','teachers.first_name','teachers.middle_name')
+                        ->join('teachers','teachers.id','=','logs.teachers_id')
+                        ->where('logs.created_at','LIKE','%'.$date.'%')
+                        ->orderBy('logs.created_at','ASC')
+                        ->get();
+        session()->forget('dashboard_date');
         return view('home', [
             "active"=>'home',
-            'status'=>$stmt
+            'status'=>$stmt,
+            'logs'=>$logs,
+            'date'=>date('F d, Y',strtotime($date))
         ]);
     }
 
@@ -67,6 +82,12 @@ class HomeController extends Controller
         $user->save();
 
         return redirect()->back()->with("success","Password successfully changed!");
+    }
+
+    public function updateDate(Request $request){
+        session(['dashboard_date' => $request->date]);
+        return response(["message"=>"Date updated"],200)
+            ->header('Content-Type', 'application/json');
     }
 
 }

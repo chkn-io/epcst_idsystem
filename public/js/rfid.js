@@ -110,6 +110,7 @@ $(document).click(function(){
 
 $("#rfid-input").keypress(function(e){
     if(e.keyCode == 13){
+      if($(this).val() != ""){
         $("#rfid-input").attr('disabled','disabled')
         $("#click-photo").click()
         var code = $(this).val()
@@ -160,5 +161,6 @@ $("#rfid-input").keypress(function(e){
 
             }
         })
+      }
     }
 })

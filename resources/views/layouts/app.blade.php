@@ -139,6 +139,8 @@
   <script src="{{asset('js/main.js')}}"></script>
   @if($active === "employees")
         <script type="module" src="{{asset('js/employee.js')}}"></script>
+  @elseif($active === "home")
+  <script type="module" src="{{asset('js/home.js')}}"></script>
   @endif
 </body>
 </html>

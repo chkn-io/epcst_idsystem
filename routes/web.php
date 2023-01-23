@@ -24,15 +24,18 @@ Route::get('/', function () {
 
 Auth::routes([
     'register' => false, // Registration Routes...
-    // 'reset' => false, // Password Reset Routes...
-    // 'verify' => false, // Email Verification Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
 ]);
 
 
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::prefix('/home')->group(function(){
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::post('/changeDate', [HomeController::class,'updateDate']);
+    });
     
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet']);
     Route::post('/changePassword',[HomeController::class, 'changePasswordPost']);
 
@@ -51,7 +54,6 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
             Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
         });
-
         
         Route::get('/reports', [ReportsController::class,'index']);
     });

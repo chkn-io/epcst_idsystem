@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>Dashboard
+        <input  type="date" class="form-control float-end" id="date-picker" style="width:30%">
+    </h1>
     <nav>
         <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
@@ -14,22 +16,90 @@
     <div class="row">
         <!-- Left side columns -->
         <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">Logs (<span class="text-primary"> {{ $date }} </span> )</div>
+                        <div class="card-body" style="height:35vh;overflow-y:scroll">
+                            <table class="table-bordered table-striped table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                        <th>Snapshot</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($logs as $log)
+                                        <tr>
+                                            <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                            <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
+                                            <td><img width="120px" class="img-thumbnail" src="{{asset('images/'.$log->snapshot)}}" alt="{{$log->snapshot}}"></td>
+                                            <td>{{$log->type == 'in' ? 'TIME IN':'TIME OUT'}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    @endif
-                    {{ __('You are logged in!') }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Time IN Logs (<span class="text-primary"> {{ $date }} </span> )</div>
+                        <div class="card-body" style="height:35vh;overflow-y:scroll">
+                            <table class="table-bordered table-striped table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($logs as $log)
+                                        @if($log->type == 'in')
+                                            <tr>
+                                                <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                                <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Time OUT Logs (<span class="text-primary"> {{ $date }} </span> )</div>
+                        <div class="card-body" style="height:35vh;overflow-y:scroll">
+                            <table class="table-bordered table-striped table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($logs as $log)
+                                        @if($log->type == 'out')
+                                            <tr>
+                                                <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                                <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <div class="col-lg-4">
             <div class="card">
-                <div class="card-header">Status</div>
+                <div class="card-header">Status (<span class="text-primary"> {{ $date }} </span> )</div>
                 <div class="card-body status-body">
                     <ul class="list-group employee-status">
                         @foreach($status as $stat)
