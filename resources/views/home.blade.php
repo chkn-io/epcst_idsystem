@@ -33,7 +33,7 @@
                                 <tbody>
                                     @foreach($logs as $log)
                                         <tr>
-                                            <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                            <td>{{date('h:i:s A',strtotime($log->created_at))}}</td>
                                             <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
                                             <td><img width="120px" class="img-thumbnail" src="{{asset('images/'.$log->snapshot)}}" alt="{{$log->snapshot}}"></td>
                                             <td>{{$log->type == 'in' ? 'TIME IN':'TIME OUT'}}</td>
@@ -59,7 +59,7 @@
                                     @foreach($logs as $log)
                                         @if($log->type == 'in')
                                             <tr>
-                                                <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                                <td>{{date('h:i:s A',strtotime($log->created_at))}}</td>
                                                 <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
                                             </tr>
                                         @endif
@@ -84,7 +84,7 @@
                                     @foreach($logs as $log)
                                         @if($log->type == 'out')
                                             <tr>
-                                                <td>{{date('H:i:s A',strtotime($log->created_at))}}</td>
+                                                <td>{{date('h:i:s A',strtotime($log->created_at))}}</td>
                                                 <td>{{$log->last_name}}, {{$log->first_name}} {{$log->middle_name}}</td>
                                             </tr>
                                         @endif

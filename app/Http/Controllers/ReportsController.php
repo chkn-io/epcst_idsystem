@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Teachers;
 
 class ReportsController extends Controller
 {
@@ -13,7 +14,13 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return view('reports', ["active"=>'reports']);
+
+        $stmt = Teachers::where('status','!=','deactivated')->get();
+
+        return view('reports', [
+            "active"=>'reports',
+            'records'=>$stmt
+        ]);
     }
 
     /**

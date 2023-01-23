@@ -18,13 +18,33 @@
                 <div class="card-header">{{ __('Generate Reports') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    <form action="/action_page.php">
+                        @csrf
+                        <div class="mb-3 mt-1">
+                          <label for="name" class="form-label">Enter employee name(s) / Select All to generate all the employee DTR</label>
+                          <select name="name" id="name" class="form-control">
+                            @foreach($records as $record)
+                                <option value="{{$record->id}}">{{$record->last_name}}, {{$record->first_name}} {{$record->middle_name}}</option>
+                            @endforeach
+                          </select>
                         </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
+                        <div class="selected border border-success p-2 rounded">
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3 mt-1">
+                                <label for="from" class="form-label">From</label>
+                                <input type="date" name="from" class="form-control" id="from">
+                            </div>
+                            <div class="col-md-6 mb-3 mt-1">
+                                <label for="to" class="form-label">To</label>
+                                <input type="date" name="to" class="form-control" id="to">
+                            </div>
+                        </div>
+                        <div class="mb-3 mt-1">
+                            <button class="btn btn-primary">Generate</button>
+                        </div>
+                      </form>
                 </div>
             </div>
         </div>

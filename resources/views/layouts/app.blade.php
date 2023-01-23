@@ -140,7 +140,9 @@
   @if($active === "employees")
         <script type="module" src="{{asset('js/employee.js')}}"></script>
   @elseif($active === "home")
-  <script type="module" src="{{asset('js/home.js')}}"></script>
+    <script type="module" src="{{asset('js/home.js')}}"></script>
+  @elseif($active === "reports")
+    <script type="module" src="{{asset('js/reports.js')}}"></script>
   @endif
 </body>
 </html>
