@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Teachers;
+use App\Models\Logs;
 
 class ReportsController extends Controller
 {
@@ -14,7 +15,6 @@ class ReportsController extends Controller
      */
     public function index()
     {
-
         $stmt = Teachers::where('status','!=','deactivated')->get();
 
         return view('reports', [
@@ -23,69 +23,37 @@ class ReportsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function generateReport(Request $request){
+        
+        $ids = [];
+        foreach(json_decode($request->list) as $list){
+            $ids[] = $list->id;
+        }
+        $from = date($request->from.' 00:00:00');
+        $to = date($request->to.' 23:59:59');
+        $stmt = Teachers::find($ids);
+        $logs = Logs::whereBetween('created_at',[$from,$to])->get();
+        $output = [];
+        $x = 0;
+        foreach($stmt as $employee){
+            $output[$x]['employee'] = $employee->last_name.', '.$employee->first_name.' '.$employee->middle_name;
+            $timein = [];
+            $timeout = [];
+            foreach($logs as $log){
+                if($log->teachers_id == $employee->id){
+                    if($log->type == 'in'){
+                        $timein[] = $log->created_at;
+                    }
+                    if($log->type == 'out'){
+                        $timeout[] = $log->created_at;
+                    }
+                }
+            }
+            $output[$x]['in'] = $timein;
+            $output[$x]['out'] = $timeout;
+            $x++;
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response($output);
     }
 }

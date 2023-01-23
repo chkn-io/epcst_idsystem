@@ -54,11 +54,9 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
             Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
         });
-        
         Route::get('/reports', [ReportsController::class,'index']);
+        Route::post('/reports/generate',[ReportsController::class,'generateReport']);
     });
-    
-    
 
     Route::prefix('rfid')->group(function(){
         Route::get('/',[RfidController::class,'index']);

@@ -31,8 +31,6 @@ class HomeController extends Controller
 
         $date = Session::has('dashboard_date') ? session('dashboard_date') : date('Y-m-d');
 
-        echo $date;
-       
          $stmt = DB::select('
          SELECT 
          CONCAT(t.last_name,", ",t.first_name) as name,
