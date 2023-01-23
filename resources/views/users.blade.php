@@ -47,7 +47,6 @@
                                             <button class="btn btn-success">Add Record</button>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                     </form>
@@ -75,7 +74,11 @@
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td><span class="badge {{ $user->status == 'active' ? 'bg-success':'bg-danger' }}">{{$user->status}}</span></td>
-                                        <td><a href="{{ url('users/'.$user->id.'') }}" class="btn btn-primary btn-sm">Update</a></td>
+                                        <td>
+                                            <a href="{{ url('users/'.$user->id.'') }}" class="btn btn-primary btn-sm">Update</a>
+                                            <a href="{{ url('users/reset_password/'.$user->id.'') }}" class="btn btn-secondary btn-sm">Reset Password</a>
+                                        </td>
+                                       
                                     </tr>
                                 @endif
                             @endforeach 
