@@ -1355,3 +1355,34 @@ h6 {
   height:75vh;
   overflow-y:scroll;
 }
+
+@media print{
+  .pagetitle{
+      display:none;
+  }
+  aside{
+      display:none;
+  }
+  #header{
+    display:none !important;
+  }
+  .gen{
+    display:none;
+  }
+
+  .report-generated{
+    /* margin-top:-70px !important; */
+  }
+  .report-generated .card-header{
+    display:none !important;
+  }
+  .pagebreak { 
+    page-break-before: always; 
+    padding-top:1rem;
+  } /* page-break-after works, as well */
+
+  #main{
+    margin:0px !important;
+    padding:0px !important;
+  }
+}

@@ -13,7 +13,7 @@
 <section class="section dashboard">
     <div class="row">
         <!-- Left side columns -->
-        <div class="col-lg-12">
+        <div class="col-lg-12 gen">
             <div class="card">
                 <div class="card-header">{{ __('Generate Reports') }}</div>
 
@@ -22,7 +22,9 @@
                         @csrf
                         <input type="hidden" name="list">
                         <div class="mb-3 mt-1">
-                          <label for="name" class="form-label">Enter employee name(s) / Select All to generate all the employee DTR</label>
+                          <label style="width:100%" for="name" class="form-label">Enter employee name(s) / Select All to generate all the employee DTR 
+                            <button type="button" class="float-end btn btn-danger btn-sm clear">Clear</button>
+                          </label>
                           <select name="name" id="name" class="form-control">
                                 <option value=""> ------------------ Please select name(s) ------------------ </option>
                                 <option value="0">All</option>
@@ -37,11 +39,11 @@
                         <div class="row">
                             <div class="col-md-6 mb-3 mt-1">
                                 <label for="from" class="form-label">From</label>
-                                <input type="date" name="from" class="form-control" id="from">
+                                <input type="date" name="from" class="form-control" id="from" value="01/01/2023">
                             </div>
                             <div class="col-md-6 mb-3 mt-1">
                                 <label for="to" class="form-label">To</label>
-                                <input type="date" name="to" class="form-control" id="to">
+                                <input type="date" name="to" class="form-control" id="to" value="01/30/2023">
                             </div>
                         </div>
                         <div class="mb-3 mt-1">
@@ -52,28 +54,16 @@
             </div>
         </div>
 
-        <div class="col-md-12 report-generated">
+        
+        <div class="col-md-12 report-generated" hidden>
             <div class="card">
                 <div class="card-header">
                     DTR From January 1, 2022 - January 31, 2022
+                    <button class="btn btn-primary float-end btn-sm print"><i class="fas fa-print"></i> Print</button>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 border border-dark rounded pt-1 pb-1">
-                            <p class="text-center m-0"><strong>EASTWOODS Professional College</strong><br> of Science and Technology</p>
-                            <p class="text-muted text-center m-0"><strong>DAILY TIME RECORD</strong></p>
-                            <p class="text-muted text-center m-0"><strong>From: </strong> <strong>To: </strong> </p>
-                            <p><strong>Name: </strong></p>
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time In</th>
-                                        <th>Time Out</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                        <p class="text-primary text-center mb-5">Generating Report. Please Wait.</p>
                     </div>
                 </div>
             </div>

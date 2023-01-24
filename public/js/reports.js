@@ -1,26 +1,33 @@
-
 var list = []
 
 $('#name').change(function(){
     var select = this.options[this.selectedIndex].innerHTML;
     if($(this).val() !== ''){
         if($(this).val() == 0){
-            $(this).attr('disabled','disabled')
-            $('#name option').removeAttr('hidden');
-            list = []
+            // $('#name option').removeAttr('hidden');
+            // list = []
+
+            $('#name option').each(function(){
+                if($(this).attr('value') != '' && $(this).attr('value') != 0){
+                    if($(this).attr('hidden') != 'hidden'){
+                        list.push({"id":$(this).attr('value'),'name':$(this).html()});
+                        $(this).attr('hidden','hidden')
+                    }
+                }
+            })
+        }else{
+            this.options[this.selectedIndex].setAttribute("hidden","hidden");
+            list.push({"id":$(this).val(),'name':select});
         }
-        this.options[this.selectedIndex].setAttribute("hidden","hidden");
-        list.push({"id":$(this).val(),'name':select});
         generateList()
     }
 })
 
+
 $(document).on('click','.remove-selected',function(e){
     e.preventDefault()
     var id = $(this).parent().attr('data-record')
-    console.log(list)
     list.splice($(this).parent().attr('data-pocket'),1)
-    console.log(list)
     if(id == 0){
         list = []
         $('#name option').removeAttr('hidden');
@@ -34,20 +41,95 @@ $(document).on('click','.remove-selected',function(e){
 })
 
 $('.generate').click(function(){
-    if($('#from').val() != '' && $('#to').val() != '' && list.length != 0){
+    var dates = [];
+    var from = $('#from').val()
+    var to = $('#to').val()
+    $('.report-generated .row').html('<p class="text-primary text-center mb-5">Generating Report. Please Wait.</p>')
+    $('.report-generated .card-header').html('DTR From '+from+' - '+to +'<button class="btn btn-primary float-end btn-sm print"><i class="fas fa-print"></i> Print</button>')
+    $('.report-generated').removeAttr('hidden');
+    var currDate = moment(from).startOf('day');
+    currDate = currDate.subtract(1,'days')
+    var lastDate = moment(to).startOf('day');
+    lastDate = lastDate.add(1,'days')
+
+    while(currDate.add(1, 'days').diff(lastDate) < 0) {
+        dates.push(currDate.clone().format('MM/DD'));
+    }
+
+
+
+    if(from != '' && to != '' && list.length != 0){
         $('input[name="list"]').val(JSON.stringify(list))
         $.ajax({
             url:'reports/generate/',
             data:$('form').serialize(),
             dataType:'JSON',
             type:'POST',
-            success:function(e){
+            success:(e)=>{
+                var html = ''
+                var counter = 0
+                $(e).each(function(k,v){
+                    counter++
+                    if(counter == 5){
+                        counter = 0
+                        html+='<div class="pagebreak"></div>'
+                    }
+                    html+='<div class="col-md-3 col-sm-3 col-xs-3 mb-1" style="font-size:80%">'+
+                            '<div class="border border-dark rounded py-1 px-2">'+
+                                '<p class="text-center m-0"><strong>EASTWOODS Professional College</strong><br> of Science and Technology</p>'+
+                                '<p class="text-muted text-center m-0"><strong>DAILY TIME RECORD</strong></p>'+
+                                '<p class="text-muted text-center m-0"><strong>From: </strong>'+from +' <strong>To: </strong>'+to +' </p>'+
+                                '<p><strong>Name: </strong>'+v.employee+'</p>'+
+                                '<table class="table table-bordered table-striped">'+
+                                '    <thead>'+
+                                '        <tr>'+
+                                '            <th>Date</th>'+
+                                '            <th>Time In</th>'+
+                                '            <th>Time Out</th>'+
+                                '        </tr>'+
+                                '    </thead>'
+                                
+                        html+='<tbody>'
+                        dates.forEach(function(dt){
+                            html+='<tr>'+
+                                    '<td>'+dt+'</td>'
+                                html+='<td>'
+                                    $(v.in[dt]).each(function(k1,v1){
+                                        html+='<span>'+v1+'</span> <br>'
+                                    })
+                                html+='</td>'
+                                html+='<td>'
+                                    $(v.out[dt]).each(function(k1,v1){
+                                        html+='<span>'+v1+'</span> <br>'
+                                    })
+                                html+='</td>'+
+                                    '</tr>'
 
+                        })
+                        html+='</tbody>'
+
+                    html+='</table></div>'+
+                        '</div>'
+                })
+
+                $('.report-generated .row').html(html)
             }
         })
     }else{
         Swal.fire('Oops!','All fields are required!','error')
     }
+})
+
+$(document).on("click",'.print',function(){
+    window.print()
+})
+
+$('.clear').click(function(){
+    list = []
+    $('#name option').removeAttr('hidden');
+    $('#name').removeAttr('disabled')
+    $('.selected').html('<p class="text-center text-success mt-3">Please select names above</p>')
+    generateList()
 })
 function generateList(){
     var html = ''
@@ -59,6 +141,7 @@ function generateList(){
         '  </a>'+
         '  </div>'
     })
+
     $('.selected').html(html)
 
     if(list.length == 0){

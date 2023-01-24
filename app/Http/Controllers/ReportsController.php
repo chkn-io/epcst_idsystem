@@ -15,7 +15,9 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $stmt = Teachers::where('status','!=','deactivated')->get();
+        $stmt = Teachers::where('status','!=','deactivated')
+                            ->orderBy('last_name','ASC')
+                            ->get();
 
         return view('reports', [
             "active"=>'reports',
@@ -31,7 +33,13 @@ class ReportsController extends Controller
         }
         $from = date($request->from.' 00:00:00');
         $to = date($request->to.' 23:59:59');
-        $stmt = Teachers::find($ids);
+        if($ids[0] == 0){
+            $stmt = Teachers::where('status','=','active')
+                            ->orderBy('last_name','ASC')
+                            ->get();
+        }else{
+            $stmt = Teachers::find($ids);
+        }
         $logs = Logs::whereBetween('created_at',[$from,$to])->get();
         $output = [];
         $x = 0;
@@ -42,10 +50,10 @@ class ReportsController extends Controller
             foreach($logs as $log){
                 if($log->teachers_id == $employee->id){
                     if($log->type == 'in'){
-                        $timein[] = $log->created_at;
+                        $timein[date('m/d',strtotime($log->created_at))][] = date('h:i A',strtotime($log->created_at));
                     }
                     if($log->type == 'out'){
-                        $timeout[] = $log->created_at;
+                        $timeout[date('m/d',strtotime($log->created_at))][] = date('h:i A',strtotime($log->created_at));
                     }
                 }
             }
