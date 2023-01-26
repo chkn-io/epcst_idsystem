@@ -9,6 +9,12 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <style type="text/css">
+        @font-face {
+            font-family: Impact;
+            src: url('{{ asset('fonts/impact.tff') }}');
+        }
+    </style>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">

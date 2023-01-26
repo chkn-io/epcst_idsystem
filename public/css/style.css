@@ -1247,6 +1247,7 @@ h6 {
   border-top: 1px solid #cddfff;
 }
 
+
 .footer .copyright {
   text-align: center;
   color: #017001;
@@ -1267,7 +1268,7 @@ h6 {
   font-size:80pt;
   text-align: center;
   margin:0;
-  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family:"Impact Regular";
 }
 
 #date{
@@ -1304,6 +1305,8 @@ h6 {
 .camera{
   position:absolute;
   cursor:move;
+  bottom:0;
+  left:0;
 }
 
 #start-camera, #click-photo, #canvas, #scan-form{
@@ -1385,4 +1388,34 @@ h6 {
     margin:0px !important;
     padding:0px !important;
   }
+}
+
+@media screen and (max-width:1239px){
+  #time{
+    font-size:50pt !important;
+    font-family:Impact !important;
+  }
+
+  .banner img{
+    width:100px;
+  }
+
+  #default-view h1{
+    font-size:15pt !important;
+  }
+
+
+.tran-details p:nth-child(1){
+  font-size:40pt;
+}
+.tran-details p:nth-child(2){
+  font-size:20pt;
+}
+
+.tran-details p:nth-child(3){
+  font-size:40pt;
+}
+.tran-details p:nth-child(4){
+  font-size:30pt;
+}
 }
