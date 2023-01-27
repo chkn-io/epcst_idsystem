@@ -53,7 +53,10 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('add_data', [UserController::class,'store'])->name('add_data');
             Route::get('/{id}', [UserController::class,'edit'])->name('edit_data');
             Route::post('/update/{id}', [UserController::class,'update'])->name('update_data');
+            Route::get('/reset_password/{id}', [UserController::class,'create']);
+            Route::post('/reset/{id}', [UserController::class,'reset'])->name('reset_password');
         });
+        
         Route::get('/reports', [ReportsController::class,'index']);
         Route::post('/reports/generate',[ReportsController::class,'generateReport']);
     });

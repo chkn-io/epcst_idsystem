@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -26,10 +27,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
+        $users = User::where('id',$id)->get();
+
+        if(!$users->isEmpty()){
+            return view('resetpassword', [
+                "active"=>'users',
+                "user"=>$users
+            ]);
+        }else{
+            return abort(404);
+        }
+
+        // return view('resetpassword');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -92,13 +106,11 @@ class UserController extends Controller
             $request->validate([
             'name' => 'required',
             'email' => 'required|email|',
-            // 'password' => 'required|min:8',
             ]);
 
             $users = User::find($id);
             $users->name = $request->name;
             $users->email = $request->email;
-            // $users->password = Hash::make($request->password);
             $users->update();
             return redirect('users');
     }
@@ -111,5 +123,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function reset(Request $request,$id){
+        $users = User::find($id);
+
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+            ]);
+
+        $users->password = Hash::make($request->password);
+        $users->update();
+
+        
+        return back()->with("status", "Reset password successfully!");
+        
     }
 }
