@@ -84,9 +84,6 @@ class RfidController extends Controller
             return response(['message'=>'No Record Found'],404)
             ->header('Content-Type', 'application/json');
         }
-
-
-        
     }
 
     /**

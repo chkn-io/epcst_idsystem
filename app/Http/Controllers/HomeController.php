@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TeacherLogResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\Logs;
+use App\Models\Teachers;
 
 class HomeController extends Controller
 {
@@ -31,14 +33,16 @@ class HomeController extends Controller
 
         $date = Session::has('dashboard_date') ? session('dashboard_date') : date('Y-m-d');
 
-         $stmt = DB::select('
-         SELECT 
-         CONCAT(t.last_name,", ",t.first_name) as name,
-         IFNULL((SELECT type FROM logs as l WHERE t.id = l.teachers_id and created_at LIKE "%'.$date.'%" ORDER BY l.id DESC LIMIT 1 ),"out") as status
-         FROM teachers as t
-         
-         ORDER BY status ASC;
-        ');
+        $stmt = Teachers::select(
+            DB::raw("CONCAT(last_name, ', ', first_name) as name"), 
+            DB::raw("IFNULL((SELECT type FROM logs WHERE teachers.id = logs.teachers_id and created_at LIKE '%".$date."%' ORDER BY logs.id DESC LIMIT 1), 'out') as status"))
+                    ->orderBy('status', 'asc')
+                    ->get();
+        
+        // $statuses = Teachers::all();
+
+        // new TeacherLogResource($statuses[1]); //single select
+        // dd(TeacherLogResource::collection($statuses));
 
         $logs = Logs::select('logs.created_at','logs.type','logs.snapshot','teachers.last_name','teachers.first_name','teachers.middle_name')
                         ->join('teachers','teachers.id','=','logs.teachers_id')
@@ -48,7 +52,7 @@ class HomeController extends Controller
         session()->forget('dashboard_date');
         return view('home', [
             "active"=>'home',
-            'status'=>$stmt,
+            'status'=>TeacherLogResource::collection($stmt),
             'logs'=>$logs,
             'date'=>date('F d, Y',strtotime($date))
         ]);

@@ -16,4 +16,10 @@ class Teachers extends Model
         'rfid'
     ];
     use HasFactory;
+
+
+    public function getfullNameAttribute(){
+        return $this->last_name .", ". $this->first_name. " ". $this->middle_name;
+    }
+
 }
