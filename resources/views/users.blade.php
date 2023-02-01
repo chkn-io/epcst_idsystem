@@ -33,8 +33,8 @@
                                         <input type="text" class="form-control" id="name" placeholder="Enter First Name" name="name">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="email" placeholder="Enter Email" name="email">
+                                        <label for="email" class="form-label">Username / RFID Number</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Enter Username" name="email">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
                                         <label for="password" class="form-label">Password</label>
@@ -62,7 +62,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Username / RFID</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

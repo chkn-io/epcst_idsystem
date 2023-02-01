@@ -92,4 +92,7 @@ class HomeController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
+    public function auto(){
+        
+    }
 }

@@ -40,7 +40,13 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your Email & Password to login</p>
+                    <p class="text-center small sub-t">Enter your Username & Password to login</p>
+
+                    <div class="text-center">
+                      <button class="btn btn-success btn-lg scan-rfid" data-record="@error('email')0 @enderror"> 
+                        <i class="fas fa-id-card"></i>
+                      </button>
+                    </div>
                   </div>
                     @yield('content')
                 </div>
@@ -62,5 +68,49 @@
     </div>
   </main>
    
+
+  <script type="module" src="{{asset('js/jquery.min.js')}}"></script>
+  <script type="module">
+    var obj = $('.scan-rfid')
+    var obj_rec = obj.attr('data-record')
+   
+    if(obj_rec.trim() == 1 || obj_rec.trim() == ""){
+      loadScanner()
+    }else{
+      loadAuthentication()
+    }
+    $('.scan-rfid').click(function(){
+      if($(this).attr('data-record') == 0 && $(this).attr('data-record') != ""){
+       
+        loadScanner()
+      }else{
+        loadAuthentication()
+      }
+    }) 
+
+    $(document).click(function(){
+      if(obj.attr('data-record') == 1){
+        $('#rfid').focus()
+      }
+    })
+    function loadScanner(){
+      obj.attr('data-record','1')
+      obj.removeClass('btn-danger')
+      obj.addClass('btn-success')
+      $("#login-form").attr('hidden','hidden')
+      $('#scanning-anim').removeAttr('hidden')
+      $('.sub-t').html('Scan your card to Sign In.')
+      $('#rfid').focus()
+    }
+
+    function loadAuthentication(){
+      obj.attr('data-record','0')
+      obj.removeClass('btn-success')
+      obj.addClass('btn-danger')
+      $('#login-form').removeAttr('hidden')
+      $('#scanning-anim').attr('hidden','hidden')
+      $('.sub-t').html('Enter your Username & Password to login')
+    }
+  </script>
 </body>
 </html>

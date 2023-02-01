@@ -6,6 +6,7 @@ use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RfidController;
+use App\Http\Controllers\GuardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,12 +24,12 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
+
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
     'verify' => false, // Email Verification Routes...
 ]);
-
 
 
 Route::group(['middleware' => 'auth'], function() {
@@ -66,8 +67,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/',[RfidController::class,'index']);
         Route::post('/',[RfidController::class,'store']);
     });
-
-
 });
 
 
@@ -75,3 +74,5 @@ Route::group(['middleware' => 'auth'], function() {
 
 
 
+
+Route::post('guard/login',[GuardController::class,'index'])->name('guard');

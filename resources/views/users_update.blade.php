@@ -33,7 +33,7 @@
                                         <input type="text" value="{{ $user[0]->name }} " class="form-control" id="name" placeholder="Enter First Name" name="name">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
-                                        <label for="email" class="form-label">Email  <span class="text-danger">*</label>
+                                        <label for="email" class="form-label">Username / RFID  <span class="text-danger">*</label>
                                         <input type="text" value="{{ $user[0]->email }}" class="form-control" id="email" placeholder="Enter Email" name="email">
                                     </div>
                                     {{-- <div class="mb-3 mt-3 col-md-12">

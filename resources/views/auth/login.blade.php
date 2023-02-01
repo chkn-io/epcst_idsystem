@@ -1,16 +1,16 @@
 @extends('layouts.login')
 @section('content')
-    <form method="POST" action="{{ route('login') }}">
+    <form hidden method="POST" id="login-form" action="{{ route('login') }}">
         @csrf
         <div class="col-12 mb-2">
-            <label for="yourUsername" class="form-label">{{ __('Email') }}</label>
+            <label for="yourUsername" class="form-label">{{ __('Username') }}</label>
             <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
-
-            
+                <span class="input-group-text" id="inputGroupPrepend">
+                    <i class="fas fa-user"></i>
+                </span>
                 <div class="invalid-feedback">Please enter your username.</div>
 
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -52,4 +52,18 @@
             @endif
         </div>
     </form>
+
+    <div id="scanning-anim">
+        <img width="100%" src="{{ asset('img/rfid-scanning.gif') }}" alt="">
+        <form method="POST" action="{{ route('guard') }}">
+            @csrf
+            <input style="opacity:0;position:absolute;left:-9999px" type="text" name="rfid" required id="rfid">
+        </form>
+       
+        @if($errors->any())
+          <div class="alert alert-danger text-center">
+            <strong>Danger!</strong> {{$errors->first()}}
+          </div>
+        @endif
+    </div>
 @endsection
