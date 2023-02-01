@@ -1,6 +1,6 @@
 $('#date-picker').change(function(){
     $.ajax({
-        url:'home/changeDate/',
+        url:'home/changeDate',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },

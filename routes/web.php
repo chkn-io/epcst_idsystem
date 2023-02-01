@@ -18,6 +18,7 @@ use App\Http\Controllers\RfidController;
 |
 */
 
+
 Route::get('/', function () {
     return redirect('/home');
 });

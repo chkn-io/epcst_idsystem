@@ -61,7 +61,7 @@ $('.generate').click(function(){
     if(from != '' && to != '' && list.length != 0){
         $('input[name="list"]').val(JSON.stringify(list))
         $.ajax({
-            url:'reports/generate/',
+            url:'reports/generate',
             data:$('form').serialize(),
             dataType:'JSON',
             type:'POST',
