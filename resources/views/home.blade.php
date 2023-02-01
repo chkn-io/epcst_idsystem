@@ -19,9 +19,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header">Logs (<span class="text-primary"> {{ $date }} </span> )</div>
+                        <div class="card-header">Logs (<span class="text-primary"> {{ $date }} </span> )
+                        <input type="text" placeholder="Search name here" style="width:30%" onkeyup="search_table()" class="form-control float-end" id="search-table">
+                    </div>
                         <div class="card-body" style="height:35vh;overflow-y:scroll">
-                            <table class="table-bordered table-striped table">
+                            <table id="logs" class="table-bordered table-striped table">
                                 <thead>
                                     <tr>
                                         <th>Time</th>
@@ -114,4 +116,25 @@
         </div>
     </div>
 </section>
+
+<script>
+    function search_table() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search-table");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("logs");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+}
+</script>
 @endsection

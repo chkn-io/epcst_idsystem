@@ -1,3 +1,4 @@
+
 $('#date-picker').change(function(){
     $.ajax({
         url:'home/changeDate',
@@ -14,3 +15,4 @@ $('#date-picker').change(function(){
         }
     })
 })
+

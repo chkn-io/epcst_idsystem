@@ -1,6 +1,6 @@
 var list = []
 
-$('#name').change(function(){
+$('#name').channp(function(){
     var select = this.options[this.selectedIndex].innerHTML;
     if($(this).val() !== ''){
         if($(this).val() == 0){
