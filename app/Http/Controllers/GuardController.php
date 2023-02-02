@@ -15,7 +15,7 @@ class GuardController extends Controller
         // dd($guard);
         if(!$guard->isEmpty()){
             Auth::loginUsingId($guard[0]['id']);
-            return redirect()->route('home');
+            return redirect()->route('rfid');
         }else{
             return Redirect::back()->withErrors(['msg' => 'Invalid RFID Number']);
         }

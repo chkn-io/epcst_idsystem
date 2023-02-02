@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     Route::prefix('rfid')->group(function(){
-        Route::get('/',[RfidController::class,'index']);
+        Route::get('/',[RfidController::class,'index'])->name('rfid');
         Route::post('/',[RfidController::class,'store']);
     });
 });
