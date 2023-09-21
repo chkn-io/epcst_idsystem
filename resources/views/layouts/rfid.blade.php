@@ -55,7 +55,37 @@
 </main>
 
 
+<audio id="success_sound">
+    <source src="{{asset('audio/success.wav')}}" type="audio/mpeg">
+</audio>
+
+<audio id="beep_sound">
+    <source src="{{asset('audio/beep.mp3')}}" type="audio/mpeg">
+</audio>
+
+<script type="module" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script type="module" src="{{asset('js/jquery.min.js')}}"></script>
 <script type="module" src="{{asset('js/rfid.js')}}"></script>
+<script type="module">
+    
+     let scanner = new Instascan.Scanner({video: document.getElementById('   ')})
+        Instascan.Camera.getCameras().then(function(cameras){
+            if(cameras.length > 0){
+                scanner.start(cameras[0]);
+            }else{
+                alert('No cameras found!')
+            }
+        }).catch(function(e){
+            console.error(e);
+        })
+
+        scanner.addListener('scan',function(c){
+            $('#rfid-input').val(c);
+            // $('#rfid-input').focus().trigger({ type : 'keypress', which : 13 });
+            var keyEvent = jQuery.Event("keypress");
+                keyEvent.keyCode = 13;
+                $("#rfid-input").trigger(keyEvent);
+        });
+</script>
 </body>
 </html>

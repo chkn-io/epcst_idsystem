@@ -45,8 +45,8 @@
         </div>
         <div class="col-md-7"  id="default-view">
             <h1 class="text-center text-muted mt-5">
-                Tap your ID Card to the RFID Scanner
-                <img width="70%" src="{{asset('img/rfid-scanning.gif')}}" alt="RFID Scanning">
+                Scan your QR Code
+                <img width="70%" src="{{asset('img/qr-scan.gif')}}" alt="RFID Scanning">
             </h1>
         </div>
         <div class="col-md-7 tran-details" id="details-view">

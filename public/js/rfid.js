@@ -1,4 +1,7 @@
 
+var success_sound = document.getElementById("success_sound"); 
+var beep_sound = document.getElementById("beep_sound"); 
+
 const days = ['Sunday',"Monday","Tuesday",'Wednesday','Thursday','Friday','Saturday'];
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -110,6 +113,7 @@ $(document).click(function(){
 
 $("#rfid-input").keypress(function(e){
     if(e.keyCode == 13){
+      beep_sound.play()
       if($(this).val() != ""){
         $("#rfid-input").attr('disabled','disabled')
         $("#click-photo").click()
@@ -136,6 +140,8 @@ $("#rfid-input").keypress(function(e){
                 $("#trans_time").html(e.time)
                 $("#profile-image").attr('src',e.picture)
                 $("#loading").css({'display':'none'})
+                
+                success_sound.play()
                 var reset = setInterval(function(){
                     $("#details-view").css({'display':'none'})
                     $("#default-view").css({'display':'block'})
