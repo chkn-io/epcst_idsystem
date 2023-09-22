@@ -370,9 +370,6 @@ h6 {
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
-.logo {
-  line-height: 1;
-}
 
 @media (min-width: 1200px) {
   .logo {
@@ -1265,7 +1262,7 @@ h6 {
 }
 
 #time{
-  font-size:80pt;
+  font-size:60pt;
   text-align: center;
   margin:0;
   font-family:"Impact Regular";
@@ -1274,6 +1271,7 @@ h6 {
 #date{
   font-size:15pt;
   text-align: center;
+  margin-bottom: 0rem;
 }
 
 .banner{
@@ -1288,17 +1286,17 @@ h6 {
 }
 
 .tran-details p:nth-child(1){
-  font-size:50pt;
+  font-size:30pt;
 }
 .tran-details p:nth-child(2){
-  font-size:40pt;
+  font-size:30pt;
 }
 
 .tran-details p:nth-child(3){
-  font-size:60pt;
+  font-size:40pt;
 }
 .tran-details p:nth-child(4){
-  font-size:60pt;
+  font-size:40pt;
 }
 
 
@@ -1406,16 +1404,16 @@ h6 {
 
 
 .tran-details p:nth-child(1){
-  font-size:40pt;
+  font-size:30pt;
 }
 .tran-details p:nth-child(2){
-  font-size:20pt;
+  font-size:15pt;
 }
 
 .tran-details p:nth-child(3){
-  font-size:40pt;
+  font-size:30pt;
 }
 .tran-details p:nth-child(4){
-  font-size:30pt;
+  font-size:20pt;
 }
 }

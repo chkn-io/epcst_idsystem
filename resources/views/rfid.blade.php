@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-md-8 p-3 pt-4 banner" >
-    <img width="150px" src="{{asset('img/logo.png')}}" class="float-start me-3" alt="">
+    <img width="100px" src="{{asset('img/logo.png')}}" class="float-start me-3" alt="">
     <h2 class="float-start">
         EASTWOODS Professional College <br>
         <span class="text-muted" style="font-size:15pt;">of Science and Technology</span>
@@ -33,20 +33,24 @@
 <div class="col-md-12 bg-white p-3">
     <div class="row">
         <div class="col-md-5">
-            <img width="100%" id="profile-image"  class="img-thumbnail" src="{{asset('img/default.png')}}" alt="Employee Picture">
+            <p class="text-center">
+                <img width="90%" id="profile-image"  class="img-thumbnail mt-4" src="{{asset('img/default.png')}}" alt="Employee Picture">
+            </p>
         </div>
         <div class="col-md-7" id="loading">
-            <img width="100%" src="{{asset('img/loading.gif')}}" alt="Loading">
+            <p class="text-center">
+                <img width="80%" src="{{asset('img/loading.gif')}}" alt="Loading">
+            </p>
         </div>
         <div class="col-md-7"  id="norecord-view">
             <h1 class="text-center text-muted mt-5">
-                <img width="100%" src="{{asset('img/norecord.gif')}}" alt="RFID Scanning">
+                <img width="80%" src="{{asset('img/norecord.gif')}}" alt="RFID Scanning">
             </h1>
         </div>
         <div class="col-md-7"  id="default-view">
             <h1 class="text-center text-muted mt-5">
                 Scan your QR Code
-                <img width="70%" src="{{asset('img/qr-scan.gif')}}" alt="RFID Scanning">
+                <img width="50%" src="{{asset('img/qr-scan.gif')}}" alt="RFID Scanning">
             </h1>
         </div>
         <div class="col-md-7 tran-details" id="details-view">

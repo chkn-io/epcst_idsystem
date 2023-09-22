@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RfidController;
 use App\Http\Controllers\GuardController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,10 @@ Auth::routes([
     'verify' => false, // Email Verification Routes...
 ]);
 
+Route::get('/shutdown',function(){
+    shell_exec('shutdown /s');
+    echo '<h1 style="text-align:center;margin-top:20vh;font-family:Arial">Shutting down...</h1>';
+})->name('shutdown_pc');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::prefix('/home')->group(function(){
