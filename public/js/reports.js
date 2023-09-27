@@ -74,7 +74,7 @@ $('.generate').click(function(){
                         counter = 0
                         html+='<div class="pagebreak"></div>'
                     }
-                    html+='<div class="col-md-3 col-sm-3 col-xs-3 mb-1" style="font-size:80%">'+
+                    html+='<div class="col-md-3 col-sm-3 col-xs-3 mb-1" style="font-size:70%">'+
                             '<div class="border border-dark rounded py-1 px-2">'+
                                 '<p class="text-center m-0"><strong>EASTWOODS Professional College</strong><br> of Science and Technology</p>'+
                                 '<p class="text-muted text-center m-0"><strong>DAILY TIME RECORD</strong></p>'+
@@ -86,6 +86,7 @@ $('.generate').click(function(){
                                 '            <th>Date</th>'+
                                 '            <th>Time In</th>'+
                                 '            <th>Time Out</th>'+
+                                '            <th>Duration</th>'+
                                 '        </tr>'+
                                 '    </thead>'
                                 
@@ -95,16 +96,37 @@ $('.generate').click(function(){
                                     '<td>'+dt+'</td>'
                                 html+='<td>'
                                     $(v.in[dt]).each(function(k1,v1){
-                                        html+='<span>'+v1+'</span> <br>'
+                                        html+='<span>'+moment(new Date("1970-01-01T" + v1)).format('hh:mm A')+'</span> <br>'
                                     })
                                 html+='</td>'
                                 html+='<td>'
                                     $(v.out[dt]).each(function(k1,v1){
-                                        html+='<span>'+v1+'</span> <br>'
+                                        html+='<span>'+moment(new Date("1970-01-01T" + v1)).format('hh:mm A')+'</span> <br>'
                                     })
-                                html+='</td>'+
-                                    '</tr>'
 
+                                var f = ''
+                                var t = ''
+                                try{
+                                    f = v.in[dt].length != 0 ? v.in[dt][0]:''
+                                    // f = moment(f.split(':'))
+                                 }catch(e){
+                                    f = ''
+                                 }
+                                try{
+                                    t = v.out[dt].length != 0 ? v.out[dt][v.out[dt].length - 1]:''
+                                    // t = moment(t.split(':'))
+                                }catch(e){
+                                    t = ''
+                                }
+                                
+                                var now  = "04/09/2013 "+t;
+                                var then = "04/09/2013 "+f;
+
+                                var out = moment.utc(moment(now,"DD/MM/YYYY HH:mm").diff(moment(then,"DD/MM/YYYY HH:mm"))).format("HH:mm")
+                               
+                                
+                                html+='</td><td class="text-danger">'+( t != '' ? out:'' )+'</td>'+
+                                    '</tr>'
                         })
                         html+='</tbody>'
 

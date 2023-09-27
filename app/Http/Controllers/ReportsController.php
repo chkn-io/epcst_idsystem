@@ -50,10 +50,10 @@ class ReportsController extends Controller
             foreach($logs as $log){
                 if($log->teachers_id == $employee->id){
                     if($log->type == 'in'){
-                        $timein[date('m/d',strtotime($log->created_at))][] = date('h:i A',strtotime($log->created_at));
+                        $timein[date('m/d',strtotime($log->created_at))][] = date('H:i:s',strtotime($log->created_at));
                     }
                     if($log->type == 'out'){
-                        $timeout[date('m/d',strtotime($log->created_at))][] = date('h:i A',strtotime($log->created_at));
+                        $timeout[date('m/d',strtotime($log->created_at))][] = date('H:i:s',strtotime($log->created_at));
                     }
                 }
             }
