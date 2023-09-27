@@ -12,7 +12,7 @@
     <style type="text/css">
         @font-face {
             font-family: Impact;
-            src: url('{{ asset('fonts/impact.tff') }}');
+            src: url('{{ asset("fonts/impact.tff") }}');
         }
     </style>
     <!-- Fonts -->
