@@ -1,28 +1,48 @@
-# How To Dockerize When Deploying
+# EPCST ID System for Employees
+The Employee Personal Code and Security Tag (EPCST) Time Tracking System is a specialized solution designed to accurately record the time-in and time-out of employees within an organization. This system streamlines attendance management while ensuring data security and privacy.
 
--   First, every changes you made, you need to rebuild the images. Run the command below.
--   The `-t` flag is a **Tag** everytime we change/commit something it is a best practice to tag it.
--   The `prod/epcstidsystem` is just a naming convention to name the tag, _prod_ for production ready and then _epcstidsystem_ which is the name of the app.
--   The `0.1` is the version, this is cumulative. So every rebuild you must increment it.
-
-```pwsh
-docker build -t prod/epcstidsystem:0.2 .
-```
-
--   After running the command above, it will install all the dependencies to docker. It will take some time to finish.
-
--   After its done, make sure to run the command below, to spin-up the dockerize version of the system.
-
-```pwsh
-docker run -p 8080:80 prod/epcstidsystem:0.1
-```
-
--   The command above will run the system using docker in port **8080** using the specified version which is 0.1. You can now access the dockerize system through `localhost:8080`.
-
--   To check all the available versions of the system/application. You can simply go to **Docker Desktop** application and go to **Images** tab, there you'll see all the available versions, including the name of all the applications.
-
-# Notes
-
--   The file `Dockerfile` is very important. Do not change it unless you know how to configure it.
-
--   You also need **Ubuntu WSL version 2** and set it to default.
+## Notes
+1. Make sure that the PC name is Eastwoods
+2. Camera is installed and working
+3. RFID is installed and working
+4. Minimum Requirements
+   * Intel Core i3 7th Gen or above
+   * 8GB RAM or above
+   * 250GB SSD or above
+   * Windows 10
+5. Internet Connection for Backup - 10Mbps+
+   
+## Installation
+1. Open OneDrive and Sign-in using biometrics@epcst.edu.ph
+    * Make sure to check the Desktop on backup
+2. Install the following Applications (OneDrive - Desktop/Installer):
+   * Laragon
+     - Install phpmyadmin
+     - Enable (Run laragon when Windows starts, Run minimized, Start all automatically)
+     - Enable SSL on Apache
+     - Add mysql/bin on PATH
+    * Winrar
+    * Gzip
+      - Add bin on PATH
+    * Composer
+      - Add composer to PATH
+    * NodeJS
+    * Visual Studio Code
+    * Github Desktop
+    * Chrome
+3. Clone project to laragon/www/epcst_idsystem. Setup .env.
+   * Paste all the old snapshots inside storage/app/public/snapshots
+   * Paste all the old images inside storage/app/images
+   * composer install
+   * npm install
+   * php artisan key generate
+   * php artisan storage:link
+   * npm run build
+5. Import latest database to phpmyadmin.
+6. Import Tasks(Desktop/Task Scheduler) to Windows Task Scheduler
+   * Run Dev - On Log (once)
+   * Execute DB Backup - On Log (every 30 minutes)
+   * DB Backup - On Log (every 30 minutes)
+   * Backup Images - On Log (every 30 minutes)
+   * Backup Snapshots - On Log (every 30 minutes)
+   * Load Kiosk - On Log (once)
