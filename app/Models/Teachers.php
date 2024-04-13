@@ -13,7 +13,8 @@ class Teachers extends Model
         'middle_name',
         'last_name',
         'picture',
-        'rfid'
+        'rfid',
+        'type'
     ];
     use HasFactory;
 

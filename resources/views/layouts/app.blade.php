@@ -116,6 +116,13 @@
                     <span>Reports</span>
                     </a>
                 </li><!-- End Dashboard Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'reports-sa' ? '': 'collapsed' }}"  href="{{ url('/reports-sa') }}">
+                    <i class="fas fa-file-alt"></i>
+                    <span>SA Attendance</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
             @endif
             
 
@@ -143,6 +150,8 @@
   @elseif($active === "home")
     <script type="module" src="{{asset('js/home.js')}}"></script>
   @elseif($active === "reports")
+    <script type="module" src="{{asset('js/reports.js')}}"></script>
+    @elseif($active === "reports-sa")
     <script type="module" src="{{asset('js/reports.js')}}"></script>
   @endif
 </body>

@@ -56,6 +56,17 @@
                                         <input type="text" value="{{ old('last_name') }}" required class="form-control @error('last_name') is-invalid @enderror" id="last_name" placeholder="Enter Last Name" name="last_name">
                                     </div>
                                     <div class="mb-3 mt-3 col-md-12">
+                                        <label for="type" class="form-label">Type <span class="text-danger">*</span>
+                                            @error('type')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </label>
+                                        <select required class="form-control @error('type') is-invalid @enderror" id="type" name="type">
+                                            <option value="teacher">Teacher</option>
+                                            <option value="student">Student</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 mt-3 col-md-12">
                                         <label for="rfid" class="form-label">RFID Number
                                             @error('rfid')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -95,6 +106,7 @@
                                 <th>Name</th>
                                 <th>Picture</th>
                                 <th>RFID</th>
+                                <th>Type</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -115,6 +127,7 @@
                                         @endif
                                     </td>
                                     <td>{{$employee->rfid == '' ? 'Not Available':$employee->rfid}}</td>
+                                    <td>{{$employee->type}}</td>
                                     <td><span class="badge {{ $employee->status == 'active' ? 'bg-success':'bg-danger' }}">{{$employee->status}}</span></td>
                                     <td>
                                         <a href="{{url('employees/'.$employee->id.'')}}" class="btn btn-primary btn-sm">Update</a>

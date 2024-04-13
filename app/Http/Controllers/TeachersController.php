@@ -31,10 +31,11 @@ class TeachersController extends Controller
     {
         //
         $validated = $request->validate([
-            'employee_number' => 'required|unique:teachers|max:6',
+            'employee_number' => 'required|unique:teachers|max:8',
             'first_name'=>'required',
             'middle_name'=>'nullable',
             'last_name'=>'required',
+            'type'=>'required|in:teacher,student',
             'rfid' => 'nullable|unique:teachers',
             'picture'=>'required|mimes:png,jpg,jpeg'
         ]);

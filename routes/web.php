@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth'], function() {
         });
         
         Route::get('/reports', [ReportsController::class,'index']);
+        Route::get('/reports-sa', [ReportsController::class,'students']);
         Route::post('/reports/generate',[ReportsController::class,'generateReport']);
     });
 

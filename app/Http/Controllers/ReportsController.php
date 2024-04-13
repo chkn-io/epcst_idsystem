@@ -16,11 +16,25 @@ class ReportsController extends Controller
     public function index()
     {
         $stmt = Teachers::where('status','!=','deactivated')
+                            ->where('type','teacher')
                             ->orderBy('last_name','ASC')
                             ->get();
 
         return view('reports', [
             "active"=>'reports',
+            'records'=>$stmt
+        ]);
+    }
+
+    public function students()
+    {
+        $stmt = Teachers::where('status','!=','deactivated')
+                            ->where('type','student')
+                            ->orderBy('last_name','ASC')
+                            ->get();
+
+        return view('reports', [
+            "active"=>'reports-sa',
             'records'=>$stmt
         ]);
     }
