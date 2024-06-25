@@ -1,3 +1,11 @@
+# Ignore Laravel storage directories and files
+/storage/*
+/storage/*.key
+
+# Except for the storage/app directory
+!/storage/app
+
+
 /node_modules
 /public/build
 /public/hot
@@ -18,5 +26,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-
-!/storage/app
