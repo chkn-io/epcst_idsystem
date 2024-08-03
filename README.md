@@ -46,3 +46,22 @@ The Employee Personal Code and Security Tag (EPCST) Time Tracking System is a sp
    * Backup Images - On Log (every 30 minutes)
    * Backup Snapshots - On Log (every 30 minutes)
    * Load Kiosk - On Log (once)
+  
+
+
+## For QA
+1. Clone Repository
+2. Open Terminal to the clone folder
+3. Duplicate .env.example
+4. Rename the duplicate
+5. Execute the following commands
+* composer install
+* npm install
+* php artisan key:generate
+* php artisan migrate --seed
+6. Select the branch to QA
+
+
+## For QA Proper
+1. php artisan migrate --seed
+2. Username: admin ; Password: password
