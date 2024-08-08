@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeachersController;
@@ -53,6 +54,11 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/{status}/{id}', [TeachersController::class,'status']);
             Route::get('/{id}', [TeachersController::class,'edit']);
             Route::post('/update/{id}', [TeachersController::class,'update']);
+        });
+
+        Route::prefix('departments')->group(function(){
+            Route::get('/', [DepartmentController::class,'index'])->name('departments');
+            Route::post('/', [DepartmentController::class,'store'])->name('departments.add');
         });
     
         Route::prefix('users')->group(function () {
