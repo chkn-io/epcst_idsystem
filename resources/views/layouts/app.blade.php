@@ -98,6 +98,12 @@
 
             @if(auth()->user()->role == 'admin')
                 <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'departments' ? '': 'collapsed' }}" href="{{ route('departments') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Departments</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
+                <li class="nav-item">
                     <a class="nav-link   {{ $active == 'employees' ? '': 'collapsed' }}" href="{{ url('/employees') }}">
                     <i class="fas fa-users"></i>
                     <span>Employees</span>
