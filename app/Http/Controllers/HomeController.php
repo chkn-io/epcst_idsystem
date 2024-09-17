@@ -47,7 +47,7 @@ class HomeController extends Controller
         $logs = Logs::select('logs.created_at','logs.type','logs.snapshot','teachers.last_name','teachers.first_name','teachers.middle_name')
                         ->join('teachers','teachers.id','=','logs.teachers_id')
                         ->where('logs.created_at','LIKE','%'.$date.'%')
-                        ->orderBy('logs.created_at','ASC')
+                        ->orderBy('logs.created_at','DESC')
                         ->get();
         session()->forget('dashboard_date');
         return view('home', [
