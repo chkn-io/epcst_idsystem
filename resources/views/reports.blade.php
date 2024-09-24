@@ -39,11 +39,11 @@
                         <div class="row">
                             <div class="col-md-6 mb-3 mt-1">
                                 <label for="from" class="form-label">From</label>
-                                <input type="date" name="from" class="form-control" id="from" value="2023-09-25">
+                                <input type="date" name="from" class="form-control" id="from">
                             </div>
                             <div class="col-md-6 mb-3 mt-1">
                                 <label for="to" class="form-label">To</label>
-                                <input type="date" name="to" class="form-control" id="to" value="2023-09-28">
+                                <input type="date" name="to" class="form-control" id="to">
                             </div>
                         </div>
                         <div class="mb-3 mt-1">
