@@ -142,4 +142,20 @@ class TeachersController extends Controller
     {
         //
     }
+
+    /**
+     * Returns a JSON of just the id and the name of the teacher. This is used by the API only.
+     */
+    public function getTeachersList() {
+        $teachers = Teachers::all();
+        $out = [];
+        foreach($teachers as $key => $teacher) {
+            $out[] = [
+                'id' => $teacher->id,
+                'name' => $teacher->full_name
+            ];
+        }
+
+        return $out;
+    }
 }
