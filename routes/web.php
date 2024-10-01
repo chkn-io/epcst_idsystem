@@ -43,6 +43,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/changeDate', [HomeController::class,'updateDate']);
     });
     
+    Route::get('/keep-alive', function () {
+        return response()->json(['status' => 'alive']);
+    });
+    
     Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet']);
     Route::post('/changePassword',[HomeController::class, 'changePasswordPost']);
 

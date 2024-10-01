@@ -2,6 +2,13 @@
 var success_sound = document.getElementById("success_sound"); 
 var beep_sound = document.getElementById("beep_sound"); 
 
+setInterval(function() {
+  fetch('/keep-alive', {
+      method: 'GET',
+      credentials: 'include'
+  });
+}, 1000 * 60 * 10); // Sends a request every 10 minutes to keep the session alive
+
 const days = ['Sunday',"Monday","Tuesday",'Wednesday','Thursday','Friday','Saturday'];
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
