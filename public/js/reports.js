@@ -1,12 +1,11 @@
 var list = []
-
+$('#name').select2()
 $('#name').change(function(){
     var select = this.options[this.selectedIndex].innerHTML;
     if($(this).val() !== ''){
         if($(this).val() == 0){
             // $('#name option').removeAttr('hidden');
             // list = []
-
             $('#name option').each(function(){
                 if($(this).attr('value') != '' && $(this).attr('value') != 0){
                     if($(this).attr('hidden') != 'hidden'){

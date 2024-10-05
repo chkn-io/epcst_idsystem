@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DailyTimeRecordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeachersController;
@@ -69,6 +70,12 @@ Route::group(['middleware' => 'auth'], function() {
         });
         
         Route::get('/reports', [ReportsController::class,'index']);
+        Route::prefix('/dtr')->group(function(){
+            Route::get('/', [DailyTimeRecordController::class,'index']);
+            Route::post('/employee', [DailyTimeRecordController::class,'employee']);
+            Route::post('/employee/save_dtr', [DailyTimeRecordController::class,'save_dtr']);
+        });
+
         Route::get('/reports-sa', [ReportsController::class,'students']);
         Route::post('/reports/generate',[ReportsController::class,'generateReport']);
     });

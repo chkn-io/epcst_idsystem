@@ -15,6 +15,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/print.css')}}" media="print" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -109,6 +110,12 @@
                     <span>Users</span>
                     </a>
                 </li><!-- End Dashboard Nav -->
+                <li class="nav-item">
+                    <a class="nav-link   {{ $active == 'dtr' ? '': 'collapsed' }}" href="{{ url('/dtr') }}">
+                    <i class="fas fa-clock"></i>
+                    <span>Daily Time Records</span>
+                    </a>
+                </li><!-- End Dashboard Nav -->
                 
                 <li class="nav-item">
                     <a class="nav-link   {{ $active == 'reports' ? '': 'collapsed' }}"  href="{{ url('/reports') }}">
@@ -144,15 +151,18 @@
     
     <script type="module" src="{{asset('js/jquery.min.js')}}"></script>
     <script type="module" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+    <script type="module" src="{{asset('js/select2.min.js')}}"></script>
   <script src="{{asset('js/main.js')}}"></script>
   @if($active === "employees")
-        <script type="module" src="{{asset('js/employee.js')}}"></script>
+    <script type="module" src="{{asset('js/employee.js')}}"></script>
   @elseif($active === "home")
     <script type="module" src="{{asset('js/home.js')}}"></script>
   @elseif($active === "reports")
     <script type="module" src="{{asset('js/reports.js')}}"></script>
     @elseif($active === "reports-sa")
     <script type="module" src="{{asset('js/reports.js')}}"></script>
+    @elseif($active === "dtr")
+    <script type="module" src="{{asset('js/dtr.js')}}"></script>
   @endif
 </body>
 </html>
