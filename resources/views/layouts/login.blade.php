@@ -51,7 +51,7 @@
                     @yield('content')
                     
 
-                    <p class="text-center"><a href="{{route('shutdown_pc')}}" class="btn btn-danger mt-5">Shutdown Computer</a></p>
+                    <!-- <p class="text-center"><a href="{{route('shutdown_pc')}}" class="btn btn-danger mt-5">Shutdown Computer</a></p> -->
                 </div>
               </div>
 
