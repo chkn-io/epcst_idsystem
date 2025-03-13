@@ -1,34 +1,58 @@
-FROM php:8.1-apache
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y \
+# Stage 1: Build dependencies
+FROM php:8.1-apache AS build
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
     libzip-dev \
-    zip 
-    
+    zip \
+    unzip \
+    curl \
+    git \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo_mysql zip mbstring gd \
+    && a2enmod rewrite
 
-# Enable mod_rewrite
-RUN a2enmod rewrite
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql zip
+# Set working directory
+WORKDIR /var/www/html
 
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+# Copy project files
+COPY . .
+
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
+
+# Install Node.js dependencies and build assets
+RUN npm install && npm run build
+
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Stage 2: Final Image (production-ready)
+FROM php:8.1-apache
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy built application from previous stage
+COPY --from=build /var/www/html /var/www/html
+
+# Set environment variables
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy the application code
-COPY . /var/www/html
-
-# Set the working directory
-WORKDIR /var/www/html
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install project dependencies
-RUN composer install
-
-
-# Set permissions
+# Set permissions again
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Expose port 8001
+EXPOSE 8001
+
+# Start Apache
+CMD ["apache2-foreground"]
