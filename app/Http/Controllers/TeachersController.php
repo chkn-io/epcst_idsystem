@@ -158,4 +158,28 @@ class TeachersController extends Controller
 
         return $out;
     }
+
+    public function upload(){
+        return view('upload', [
+            "active"=>'employees',
+        ]);
+    }
+
+    public function upload_images(Request $request)
+    {
+        // Validate the uploaded images
+        $request->validate([
+            'picture.*' => 'required|image|mimes:jpeg,jpg,png|max:2048'
+        ]);
+    
+        // Loop through each uploaded file
+        foreach ($request->file('picture') as $image) {
+            $originalName = $image->getClientOriginalName();
+    
+            // Store with original filename (in 'images/' folder)
+            $image->storeAs('images', $originalName);
+        }
+    
+        return back()->with('success', 'Images uploaded successfully!');
+    }
 }

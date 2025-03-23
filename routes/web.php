@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::prefix('employees')->group(function(){
             Route::post('/', [TeachersController::class,'store']);
             Route::get('/', [TeachersController::class,'index']);
+            Route::get('/upload/images', [TeachersController::class,'upload']);
+            Route::post('/upload/images', [TeachersController::class,'upload_images'])->name('images.upload');
             Route::get('/{status}/{id}', [TeachersController::class,'status']);
             Route::get('/{id}', [TeachersController::class,'edit']);
             Route::post('/update/{id}', [TeachersController::class,'update']);
