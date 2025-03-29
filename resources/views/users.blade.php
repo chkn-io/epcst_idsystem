@@ -40,6 +40,21 @@
                                         <label for="password" class="form-label">Password</label>
                                         <input type="password"  class="form-control" id="password" placeholder="Enter Password" name="password">
                                     </div>
+
+                                    <div class="user-roles">
+
+                                    <h3 class="Roles">Roles: </h3>
+                                    <select class="bootstrap-select">
+                                            <option value="1" selected="selected">Employee</option>
+                                            <option value="2">HR</option>
+                                            <option value="3">SASO</option>
+                                            <option value="4">Student</option>
+                                            <option value="4">Guard</option>
+                                            <option value="4">Admin</option>
+                                    </select>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="row justify-content-around">
